@@ -20,7 +20,7 @@ def map_sentiment_to_int(annotation):
 ## Mapping
 reference_annotations = annotations["label"].map(map_sentiment_to_int)
 llm_annotations = annotations["llm_annotation"].map(map_sentiment_to_int)
-# Replace NaN values with 'Unannotated'
+# Replace NaN values
 reference_annotations = reference_annotations.fillna(4)
 llm_annotations = llm_annotations.fillna(4)
 
@@ -30,7 +30,7 @@ cm = confusion_matrix(reference_annotations, llm_annotations)
 # Plot
 plt.figure(figsize=(8, 6))
 
-sns.heatmap(cm, annot=True, cmap='Blues', fmt='d')
+sns.heatmap(cm, annot=True, cmap="Blues", fmt="d")
 plt.title("Confusion matrix example: Human and LLM annotations", fontsize=14)
 plt.xlabel("LLM annotations", fontsize=12, labelpad=10)
 plt.ylabel("Human annotations", fontsize=12, labelpad=10)

@@ -4,7 +4,7 @@ from openai import OpenAI
 import pandas as pd
 
 #API key
-client = OpenAI(api_key = os.getenv('OPENAI_API_KEY'))
+client = OpenAI(api_key = os.getenv("OPENAI_API_KEY"))
 
 # Prompts
 sentiment_v0_prompt = """
@@ -79,8 +79,8 @@ def zeroshot_sentiment_annotation(text, prompt):
 # Function to call GPT-4o with few-shot prompts
 def fewshot_sentiment_annotation(text, prompt, fewshot_dataset):
     # Sample few-shot examples from dataset without current article
-    fewshot_dataset = fewshot_dataset[fewshot_dataset['text'] != text]
-    fewshot_examples = fewshot_dataset.sample(3).to_dict(orient='records')
+    fewshot_dataset = fewshot_dataset[fewshot_dataset["text"] != text]
+    fewshot_examples = fewshot_dataset.sample(3).to_dict(orient="records")
     # Create few-shot part of prompt
     fewshot_examples = "\n".join([f"Artikel: {example['text']}. Artiklen fremkalder dette sentiment: {example['label']}." for example in fewshot_examples])
 
@@ -125,18 +125,18 @@ def fewshot_sentiment_annotation(text, prompt, fewshot_dataset):
         return None
 
 # Load human-annotated data
-df = pd.read_csv('')
+df = pd.read_csv("")
 
 # Apply function and add results to df
-df['v0-zeroshot-annotation'] = df['text'].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v0_prompt))
-df['v1-zeroshot-annotation'] = df['text'].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v1_prompt))
-df['v2-zeroshot-annotation'] = df['text'].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v2_prompt))
-df['v3-zeroshot-annotation'] = df['text'].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v3_prompt))
+df["v0-zeroshot-annotation"] = df["text"].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v0_prompt))
+df["v1-zeroshot-annotation"] = df["text"].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v1_prompt))
+df["v2-zeroshot-annotation"] = df["text"].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v2_prompt))
+df["v3-zeroshot-annotation"] = df["text"].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v3_prompt))
 
-df['v0-fewshot-annotation'] = df['text'].apply(lambda text: fewshot_sentiment_annotation(text, prompt=sentiment_v0_prompt, fewshot_dataset=df))
-df['v1-fewshot-annotation'] = df['text'].apply(lambda text: fewshot_sentiment_annotation(text, prompt=sentiment_v1_prompt, fewshot_dataset=df))
-df['v2-fewshot-annotation'] = df['text'].apply(lambda text: fewshot_sentiment_annotation(text, prompt=sentiment_v2_prompt, fewshot_dataset=df))
-df['v3-fewshot-annotation'] = df['text'].apply(lambda text: fewshot_sentiment_annotation(text, prompt=sentiment_v3_prompt, fewshot_dataset=df))
+df["v0-fewshot-annotation"] = df["text"].apply(lambda text: fewshot_sentiment_annotation(text, prompt=sentiment_v0_prompt, fewshot_dataset=df))
+df["v1-fewshot-annotation"] = df["text"].apply(lambda text: fewshot_sentiment_annotation(text, prompt=sentiment_v1_prompt, fewshot_dataset=df))
+df["v2-fewshot-annotation"] = df["text"].apply(lambda text: fewshot_sentiment_annotation(text, prompt=sentiment_v2_prompt, fewshot_dataset=df))
+df["v3-fewshot-annotation"] = df["text"].apply(lambda text: fewshot_sentiment_annotation(text, prompt=sentiment_v3_prompt, fewshot_dataset=df))
 
 # Save the results to a new .csv file
-df.to_csv('', index=False)
+df.to_csv("", index=False)

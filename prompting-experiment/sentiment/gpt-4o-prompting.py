@@ -4,10 +4,10 @@ from openai import OpenAI
 import pandas as pd
 
 #API key
-client = OpenAI(api_key = os.getenv('OPENAI_API_KEY'))
+client = OpenAI(api_key = os.getenv("OPENAI_API_KEY"))
 
 # load evaluation data
-data = pd.read_csv('')
+data = pd.read_csv("")
 
 # prompt
 sentiment_v1_prompt = """
@@ -66,7 +66,7 @@ def zeroshot_sentiment_annotation(text, prompt):
     
 
 # Apply function and add results to df
-data['llm_annotation'] = data['text'].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v1_prompt))
+data["llm_annotation"] = data["text"].apply(lambda text: zeroshot_sentiment_annotation(text, prompt=sentiment_v1_prompt))
 
 # Save the results to a new CSV file
-data.to_csv('', index=False)
+data.to_csv("", index=False)

@@ -44,7 +44,7 @@ def evaluate_multi_label_without_unannotated(reference: pd.Series, llm_annotatio
     reference = reference.apply(annotation_to_list)
     llm_annotation = llm_annotation.apply(annotation_to_list)
     # Number of unannotated cases
-    print('Number of unannotated samples:', llm_annotation.apply(lambda x: isinstance(x, list) and len(x) == 0).sum())
+    print("Number of unannotated samples:", llm_annotation.apply(lambda x: isinstance(x, list) and len(x) == 0).sum())
     # remove unannotated samples
     # Identify indices where llm_annotation contains empty lists
     empty_list_indices = llm_annotation[llm_annotation.apply(lambda x: x == [])].index
@@ -59,9 +59,9 @@ def evaluate_multi_label_without_unannotated(reference: pd.Series, llm_annotatio
     binarized_llm_annotations = mlb.transform(llm_annotation)
     # Evaluation metrics
     accuracy = round(multi_label_accuracy(reference, llm_annotation), 2)
-    precision = round(precision_score(binarized_references, binarized_llm_annotations, average='samples'), 2)
-    recall = round(recall_score(binarized_references, binarized_llm_annotations, average='samples'), 2)
-    f1score = round(f1_score(binarized_references, binarized_llm_annotations, average='samples'), 2)
+    precision = round(precision_score(binarized_references, binarized_llm_annotations, average="samples"), 2)
+    recall = round(recall_score(binarized_references, binarized_llm_annotations, average="samples"), 2)
+    f1score = round(f1_score(binarized_references, binarized_llm_annotations, average="samples"), 2)
     hl = round(hamming_loss(binarized_references, binarized_llm_annotations), 2)
     return f"""
 Evaluation WITHOUT unannotated samples:
@@ -78,7 +78,7 @@ def evaluate_multi_label_with_unannotated(reference: pd.Series, llm_annotation: 
     reference = reference.apply(annotation_to_list)
     llm_annotation = llm_annotation.apply(annotation_to_list)
     # get number of unannotated cases
-    print('Number of unannotated samples:', llm_annotation.apply(lambda x: isinstance(x, list) and len(x) == 0).sum())
+    print("Number of unannotated samples:", llm_annotation.apply(lambda x: isinstance(x, list) and len(x) == 0).sum())
     # sklearn binarizer
     mlb = MultiLabelBinarizer()
     mlb.fit_transform(reference)
@@ -86,9 +86,9 @@ def evaluate_multi_label_with_unannotated(reference: pd.Series, llm_annotation: 
     binarized_llm_annotations = mlb.transform(llm_annotation)
     # Evaluation metrics
     accuracy = round(multi_label_accuracy(reference, llm_annotation), 2)
-    precision = round(precision_score(binarized_references, binarized_llm_annotations, average='samples'), 2)
-    recall = round(recall_score(binarized_references, binarized_llm_annotations, average='samples'), 2)
-    f1score = round(f1_score(binarized_references, binarized_llm_annotations, average='samples'), 2)
+    precision = round(precision_score(binarized_references, binarized_llm_annotations, average="samples"), 2)
+    recall = round(recall_score(binarized_references, binarized_llm_annotations, average="samples"), 2)
+    f1score = round(f1_score(binarized_references, binarized_llm_annotations, average="samples"), 2)
     hl = round(hamming_loss(binarized_references, binarized_llm_annotations), 2)
     return f"""
 Evaluation WITH unannotated samples:

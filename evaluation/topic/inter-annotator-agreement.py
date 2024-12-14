@@ -28,7 +28,7 @@ def iaa_two_annotators(data, remove):
     data["label"] = data["label"].apply(annotation_to_list)
     data["llm_annotation"] = data["llm_annotation"].apply(annotation_to_list)
     
-    # Remove rows where 'llm_annotation' is empty list
+    # Remove rows where "llm_annotation" is empty list
     if remove == True:
         print("len before removing unannoted items:", len(data))
         data = data[data["llm_annotation"].apply(lambda x: isinstance(x, list) and len(x) > 0)]
@@ -61,7 +61,7 @@ def iaa_three_annotators(data, remove):
     data["llm_annotation"] = data["llm_annotation"].apply(annotation_to_list)
     data["second_label"] = data["second_label"].apply(annotation_to_list)
 
-    # Remove rows where 'llm_annotation' is empty list
+    # Remove rows where "llm_annotation" is empty list
     if remove == True:
         print("len before removing unannoted items:", len(data))
         data = data[data["llm_annotation"].apply(lambda x: isinstance(x, list) and len(x) > 0)]

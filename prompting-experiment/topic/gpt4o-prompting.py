@@ -4,10 +4,10 @@ from openai import OpenAI
 import pandas as pd
 
 #API key
-client = OpenAI(api_key = os.getenv('OPENAI_API_KEY'))
+client = OpenAI(api_key = os.getenv("OPENAI_API_KEY"))
 
 # load data
-data = pd.read_csv('')
+data = pd.read_csv("")
 
 # best prompt
 topic_v3_prompt = """
@@ -20,8 +20,8 @@ Giv et præcist svar i json: {{topics: [”kategori”, ”kategori”, ”kateg
 # Function to call GPT-4o with few-shot prompts
 def fewshot_topic_annotation(text, prompt, fewshot_dataset):
     # Sample few-shot examples from dataset without current article
-    fewshot_dataset = fewshot_dataset[fewshot_dataset['text'] != text]
-    fewshot_examples = fewshot_dataset.sample(3).to_dict(orient='records')
+    fewshot_dataset = fewshot_dataset[fewshot_dataset["text"] != text]
+    fewshot_examples = fewshot_dataset.sample(3).to_dict(orient="records")
     # Create few-shot parrt of prompt
     fewshot_examples = "\n".join([f"Artikel: {example['text']}. Artiklen omhandler dette/disse emne(r): {example['label']}." for example in fewshot_examples])
 
@@ -66,14 +66,13 @@ def fewshot_topic_annotation(text, prompt, fewshot_dataset):
 
         # Extract  response
         topics = response.choices[0].message.content
-        print('annotated')
         return topics
     except Exception as e:
         print(f"Error: {e}")
         return None
     
 # Apply function and add results to df
-data['llm_annotation'] = data['text'].apply(lambda text: fewshot_topic_annotation(text, prompt=topic_v3_prompt, fewshot_dataset=data))
+data["llm_annotation"] = data["text"].apply(lambda text: fewshot_topic_annotation(text, prompt=topic_v3_prompt, fewshot_dataset=data))
 
 # Save the results to a new CSV file
-data.to_csv('', index=False)
+data.to_csv("", index=False)

@@ -1,4 +1,4 @@
-## Code associated with the thesis:
+## Code associated with thesis
 
 ### Leveraging Large Language Models for Text Annotation: A ...
 

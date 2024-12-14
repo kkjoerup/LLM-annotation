@@ -1,5 +1,6 @@
-# LLM-annotation
-Code for thesis on using LLMs for corpus annotation
+## Code associated with the thesis:
 
+### Leveraging Large Language Models for Text Annotation: A ...
 
-(Lav noget med prompts for sig selv, som så kan hentes ind i script)
+Files are organized in a folder hierarchy with the following structure:
+**Experiment > Task > LLM**
